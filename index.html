@@ -8,7 +8,23 @@
 </head>
 <body ng-app="pompom">
 
-<div class="container" ng-controller="MainCtrl as vm">
+<div class="container" ng-controller="MainCtrl as ctrl">
+  <div class="row">
+
+    <div class="col-sm-8 col-sm-offset-2 col-xs-6 col-xs-offset-3">
+      <div class="jumbotron text-center main-panel">
+        <h2 class="title">PomPom</h2>
+
+        <h1 id="time-display" class="time-display">30:00</h1>
+
+        <div class="btn-group btn-group-lg">
+          <button class="btn btn-lg btn-success" ng-click="ctrl.start(.2)">Start</button>
+          <button class="btn btn-lg btn-danger" ng-click="ctrl.stop()">Stop</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script src="app/libs/jquery.js"></script>
