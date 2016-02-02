@@ -4,7 +4,7 @@ module PomPom {
   const INITIAL_R: number = 0;
   const INITIAL_G: number = 230;
   const INITIAL_B: number = 25;
-  const FINAL_R: number = 215;
+  const FINAL_R: number = 200;
 
   class MainCtrl {
 
@@ -22,8 +22,8 @@ module PomPom {
 
     constructor(private $interval: ng.IIntervalService) {
       this.r = 0.0;
-      this.g = 255.0;
-      this.b = 20;
+      this.g = INITIAL_G;
+      this.b = INITIAL_B;
       this.intervalSize = 25;
       this.running = false;
       this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
@@ -35,7 +35,7 @@ module PomPom {
       if (!self.running) {
         self.length = minutes * 60 * 1000;
         self.r = 0.0;
-        self.g = 255.0;
+        self.g = INITIAL_G;
         self.startTime = Date.now();
         self.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
         self.interval = self.$interval(() => self.tick(), self.intervalSize);

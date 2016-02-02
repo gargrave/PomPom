@@ -1,26 +1,30 @@
+$trans-white1: rgba(255, 255, 255, .375);
+$trans-white2: rgba(255, 255, 255, .225);
+$trans-gray: rgba(20, 20, 20, .2);
+$gray-text: #222;
+
 body {
   background-color: rgb(0, 230, 25);
   margin-top: 100px;
 }
 
 h1 {
-  font-size: 76px !important;
-  font-weight: bold;
+  font-size: 80px !important;
 }
 
 h2 {
-  font-size: 45px !important;
+  font-size: 46px !important;
 }
 
 .main-panel {
-  background-color: #eee;
+  color: $gray-text;
+  background-color: $trans-white1;
   padding: 0 0 24px 0 !important;
   border-radius: 6px;
 }
 
 .title {
-  color: white !important;
-  background-color: #555;
+  background-color: $trans-white2;
   width: 100%;
   padding: 8px 0;
   border-radius: 6px 6px 0 0;
@@ -28,4 +32,9 @@ h2 {
 
 .time-display {
   padding-bottom: 14px;
+}
+
+.btn-default {
+  background-color: $trans-white1 !important;
+  border: 1px solid $trans-gray;
 }

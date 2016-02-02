@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>PomPom</title>
   <link rel="stylesheet" href="app/libs/bootstrap.css">
   <link rel="stylesheet" href="app/css/main.css">
 </head>
+
 <body ng-app="pompom">
 
 <div class="container" ng-controller="MainCtrl as ctrl">
   <div class="row">
-
-    <div class="col-sm-8 col-sm-offset-2 col-xs-6 col-xs-offset-3">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-12">
       <div class="jumbotron text-center main-panel">
         <h2 class="title">PomPom</h2>
-
         <h1 id="time-display" class="time-display">30:00</h1>
 
-        <div class="btn-group btn-group-lg">
-          <button class="btn btn-lg btn-success" ng-click="ctrl.start(.2)">Start</button>
-          <button class="btn btn-lg btn-danger" ng-click="ctrl.stop()">Stop</button>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-sm btn-default" ng-click="">30 min.</button>
+          <button class="btn btn-sm btn-default" ng-click="">5 min.</button>
         </div>
+        <br>
+        <br>
+        <div class="btn-group btn-group">
+          <button class="btn btn-success" ng-click="ctrl.start(30)">Start</button>
+          <button class="btn btn-danger" ng-click="ctrl.stop()">Stop</button>
+        </div>
+
       </div>
     </div>
-
   </div>
 </div>
 
@@ -33,4 +39,5 @@
 <script src="app/app.js"></script>
 <script src="app/main.ctrl.js"></script>
 </body>
+
 </html>

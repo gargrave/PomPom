@@ -3,13 +3,13 @@ var PomPom;
     var INITIAL_R = 0;
     var INITIAL_G = 230;
     var INITIAL_B = 25;
-    var FINAL_R = 215;
+    var FINAL_R = 200;
     var MainCtrl = (function () {
         function MainCtrl($interval) {
             this.$interval = $interval;
             this.r = 0.0;
-            this.g = 255.0;
-            this.b = 20;
+            this.g = INITIAL_G;
+            this.b = INITIAL_B;
             this.intervalSize = 25;
             this.running = false;
             this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
@@ -19,7 +19,7 @@ var PomPom;
             if (!self.running) {
                 self.length = minutes * 60 * 1000;
                 self.r = 0.0;
-                self.g = 255.0;
+                self.g = INITIAL_G;
                 self.startTime = Date.now();
                 self.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
                 self.interval = self.$interval(function () { return self.tick(); }, self.intervalSize);
