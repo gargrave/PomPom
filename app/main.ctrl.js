@@ -2,8 +2,8 @@ var PomPom;
 (function (PomPom) {
     var INITIAL_R = 0;
     var INITIAL_G = 230;
-    var INITIAL_B = 25;
-    var FINAL_R = 200;
+    var INITIAL_B = 10;
+    var FINAL_R = 190;
     var MainCtrl = (function () {
         function MainCtrl($interval) {
             this.$interval = $interval;
@@ -11,37 +11,42 @@ var PomPom;
             this.g = INITIAL_G;
             this.b = INITIAL_B;
             this.intervalSize = 25;
+            this.remaining = 0;
             this.running = false;
             this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
+            this.setLength(30);
         }
-        MainCtrl.prototype.start = function (minutes) {
+        MainCtrl.prototype.start = function () {
             var self = this;
             if (!self.running) {
-                self.length = minutes * 60 * 1000;
-                self.r = 0.0;
-                self.g = INITIAL_G;
-                self.startTime = Date.now();
-                self.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
+                self.lastTick = Date.now();
                 self.interval = self.$interval(function () { return self.tick(); }, self.intervalSize);
-                $('#startBtn').prop('disabled', true);
-                $('#stopBtn').prop('disabled', false);
                 self.running = true;
             }
+        };
+        MainCtrl.prototype.onStopClick = function () {
+            var self = this;
+            self.stop();
+        };
+        MainCtrl.prototype.setLength = function (minutes) {
+            var self = this;
+            self.initialTime = minutes * 60 * 1000;
+            self.remaining = self.initialTime;
+            self.updateTimeDisplay();
+            self.updateColor();
         };
         MainCtrl.prototype.stop = function () {
             var self = this;
             if (self.running) {
                 self.$interval.cancel(self.interval);
-                $('#startBtn').prop('disabled', false);
-                $('#stopBtn').prop('disabled', true);
                 self.running = false;
             }
         };
         MainCtrl.prototype.updateTimeDisplay = function () {
             var self = this;
             var min = Math.floor(self.remaining / 1000 / 60).toString();
-            if (min.length < 2) {
-                min = '0' + min;
+            if (min === '0') {
+                min = '';
             }
             var sec = Math.floor(self.remaining / 1000 % 60).toString();
             if (sec.length < 2) {
@@ -51,7 +56,7 @@ var PomPom;
         };
         MainCtrl.prototype.updateColor = function () {
             var self = this;
-            var mult = self.remaining / self.length;
+            var mult = self.remaining / self.initialTime;
             self.r = Math.min(FINAL_R - (FINAL_R * mult), FINAL_R);
             self.g = Math.max(INITIAL_G * mult, 0);
             self.setColor(Math.floor(self.r), Math.floor(self.g), self.b);
@@ -62,7 +67,8 @@ var PomPom;
         };
         MainCtrl.prototype.tick = function () {
             var self = this;
-            self.remaining = self.length - (Date.now() - self.startTime);
+            self.remaining -= (Date.now() - self.lastTick);
+            self.lastTick = Date.now();
             if (self.remaining < self.intervalSize) {
                 self.remaining = 0;
             }

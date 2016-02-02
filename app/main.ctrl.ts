@@ -3,55 +3,60 @@ module PomPom {
 
   const INITIAL_R: number = 0;
   const INITIAL_G: number = 230;
-  const INITIAL_B: number = 25;
-  const FINAL_R: number = 200;
+  const INITIAL_B: number = 10;
+  const FINAL_R: number = 190;
 
   class MainCtrl {
-
-    private length: number;
 
     private r: number;
     private g: number;
     private b: number;
-    private intervalSize: number;
-    private running: boolean;
 
     private interval;
-    private startTime: number;
+    private intervalSize: number;
+
+    private lastTick: number;
+    private initialTime: number;
     private remaining: number;
+    private running: boolean;
 
     constructor(private $interval: ng.IIntervalService) {
       this.r = 0.0;
       this.g = INITIAL_G;
       this.b = INITIAL_B;
       this.intervalSize = 25;
+      this.remaining = 0;
       this.running = false;
       this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
+      this.setLength(30);
     }
 
-    start(minutes: number): void {
+    start(): void {
       const self = this;
-
       if (!self.running) {
-        self.length = minutes * 60 * 1000;
-        self.r = 0.0;
-        self.g = INITIAL_G;
-        self.startTime = Date.now();
-        self.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
+        self.lastTick = Date.now();
         self.interval = self.$interval(() => self.tick(), self.intervalSize);
-        $('#startBtn').prop('disabled', true);
-        $('#stopBtn').prop('disabled', false);
         self.running = true;
       }
     }
 
-    stop(): void {
+    onStopClick(): void {
       const self = this;
+      self.stop();
+    }
 
+    setLength(minutes: number): void {
+      const self = this;
+      self.initialTime = minutes * 60 * 1000;
+      self.remaining = self.initialTime;
+      self.updateTimeDisplay();
+      self.updateColor();
+    }
+
+    private stop(): void {
+      const self = this;
       if (self.running) {
         self.$interval.cancel(self.interval);
-        $('#startBtn').prop('disabled', false);
-        $('#stopBtn').prop('disabled', true);
         self.running = false;
       }
     }
@@ -59,8 +64,8 @@ module PomPom {
     private updateTimeDisplay(): void {
       const self = this;
       let min: string = Math.floor(self.remaining / 1000 / 60).toString();
-      if (min.length < 2) {
-        min = '0' + min;
+      if (min === '0') {
+        min = '';
       }
       let sec: string = Math.floor(self.remaining / 1000 % 60).toString();
       if (sec.length < 2) {
@@ -71,7 +76,7 @@ module PomPom {
 
     private updateColor(): void {
       const self = this;
-      let mult = self.remaining / self.length;
+      let mult = self.remaining / self.initialTime;
       self.r = Math.min(FINAL_R - (FINAL_R * mult), FINAL_R);
       self.g = Math.max(INITIAL_G * mult, 0);
       self.setColor(Math.floor(self.r), Math.floor(self.g), self.b);
@@ -84,7 +89,8 @@ module PomPom {
 
     private tick(): void {
       const self = this;
-      self.remaining = self.length - (Date.now() - self.startTime);
+      self.remaining -= (Date.now() - self.lastTick);
+      self.lastTick = Date.now();
       if (self.remaining < self.intervalSize) {
         self.remaining = 0;
       }
