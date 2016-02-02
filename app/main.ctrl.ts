@@ -8,6 +8,8 @@ module PomPom {
 
   class MainCtrl {
 
+    timeDisplay: string;
+
     private r: number;
     private g: number;
     private b: number;
@@ -71,7 +73,7 @@ module PomPom {
       if (sec.length < 2) {
         sec = '0' + sec;
       }
-      $('#time-display').html(`${min}:${sec}`);
+      self.timeDisplay = `${min}:${sec}`;
     }
 
     private updateColor(): void {

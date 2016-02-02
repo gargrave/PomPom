@@ -52,7 +52,7 @@ var PomPom;
             if (sec.length < 2) {
                 sec = '0' + sec;
             }
-            $('#time-display').html(min + ":" + sec);
+            self.timeDisplay = min + ":" + sec;
         };
         MainCtrl.prototype.updateColor = function () {
             var self = this;
