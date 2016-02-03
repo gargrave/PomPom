@@ -23,7 +23,7 @@
             </button>
             <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setBreakSession()">Break
             </button>
-            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(.1)">Mini
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setMiniSession()">Mini
             </button>
           </div>
           <br>
@@ -34,6 +34,8 @@
             <button class="btn btn-danger" ng-click="ctrl.onStopClick()" ng-disabled="!ctrl.running">Stop
             </button>
           </div>
+          <br>
+          <h4 class="main-panel-footer">Current: <span ng-bind="ctrl.sessionDesc">30-Minute Session</span></h4>
         </div>
 
       </div>
@@ -72,4 +74,5 @@
   <script src="app-build/js/main.ctrl.js"></script>
   <!--%END_APP_SCRIPTS%-->
 </body>
+
 </html>

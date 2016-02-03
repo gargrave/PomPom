@@ -19,7 +19,8 @@ h2 {
 .main-panel {
   color: $gray-text;
   background-color: $trans-white1;
-  padding: 0 0 24px 0 !important;
+  // padding: 0 0 24px 0 !important;
+  padding: 0 !important;
   border-radius: 6px;
 }
 
@@ -28,6 +29,14 @@ h2 {
   width: 100%;
   padding: 8px 0;
   border-radius: 6px 6px 0 0;
+}
+
+.main-panel-footer {
+  @extend .title;
+  padding: 10px 0;
+  border-radius: 0 0 6px 6px;
+  font-weight: 300;
+  margin-top: 25px;
 }
 
 .time-display {

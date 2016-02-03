@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 module PomPom {
 
-  enum SessionType { Full, Break, Snooze }
+  enum SessionType { Full, Break, Snooze, Mini }
 
   // constant values for starting/ending color components
   const INITIAL_R: number = 0;
@@ -15,7 +15,9 @@ module PomPom {
     // the string-based version of the current remaining time (i.e. 'MM:SS')
     timeDisplay: string;
     // the string version of the current display type
-    sessString: string;
+    sessionName: string;
+    // the description of the curresnt session
+    sessionDesc: string;
 
     // color components for the page's current background color
     private r: number;
@@ -49,7 +51,7 @@ module PomPom {
       this.remaining = 0;
       this.running = false;
       this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
-      this.setLength(30);
+      this.setFullSession();
     }
 
     /**
@@ -71,7 +73,8 @@ module PomPom {
      */
     setFullSession(): void {
       this.currentSessType = SessionType.Full;
-      this.sessString = 'Full';
+      this.sessionName = 'Full';
+      this.sessionDesc = '30-Minute Session';
       this.setLength(30);
     }
 
@@ -80,7 +83,6 @@ module PomPom {
      */
     startFull(): void {
       this.setFullSession();
-      this.sessString = this.currentSessType.toString();
       this.start();
     }
 
@@ -89,7 +91,8 @@ module PomPom {
      */
     setBreakSession(): void {
       this.currentSessType = SessionType.Break;
-      this.sessString = 'Break';
+      this.sessionName = 'Break';
+      this.sessionDesc = '5-Minute Break';
       this.setLength(5);
     }
 
@@ -106,7 +109,8 @@ module PomPom {
      */
     setSnoozeSession(): void {
       this.currentSessType = SessionType.Snooze;
-      this.sessString = 'Snooze';
+      this.sessionName = 'Snooze';
+      this.sessionDesc = '2-Minute Snooze';
       this.setLength(2);
     }
 
@@ -119,12 +123,22 @@ module PomPom {
     }
 
     /**
+     * Sets the current session type to 'Full' but DOES NOT start the timer.
+     */
+    setMiniSession(): void {
+      this.currentSessType = SessionType.Mini;
+      this.sessionName = 'Mini';
+      this.sessionDesc = 'Mini Session';
+      this.setLength(.1);
+    }
+
+    /**
      * Sets the length, in minutes, of the current session. This will update the time
      * display and background color, but will not start the timer yet.
      *
      * @param  {number} minutes The number of minutes to which the timer should be set
      */
-    setLength(minutes: number): void {
+    private setLength(minutes: number): void {
       this.initialTime = minutes * 60 * 1000;
       this.remaining = this.initialTime;
       this.updateTimeDisplay();
