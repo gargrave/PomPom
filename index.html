@@ -5,83 +5,71 @@
   <meta charset="UTF-8">
   <title>PomPom</title>
   <link rel="stylesheet" href="app/libs/bootstrap.css">
-  <link rel="stylesheet" href="app/css/main.css">
+  <link rel="stylesheet" href="app-build/css/main.css">
 </head>
 
 <body ng-app="pompom">
 
-<div class="container" ng-controller="MainCtrl as ctrl">
-  <div class="row">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+  <div class="container" ng-controller="MainCtrl as ctrl">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
 
-      <div class="jumbotron text-center main-panel">
-        <h2 class="title">PomPom</h2>
-        <h1 id="time-display" class="time-display" ng-bind="ctrl.timeDisplay">30:00</h1>
+        <div class="jumbotron text-center main-panel">
+          <h2 class="title">PomPom</h2>
+          <h1 id="time-display" class="time-display" ng-bind="ctrl.timeDisplay">30:00</h1>
 
-        <div class="btn-group btn-group-sm">
-          <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setLength(30)">30 min.
-          </button>
-          <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setLength(5)">5 min.
-          </button>
-          <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setLength(.1)">1 min.
-          </button>
-        </div>
-        <br>
-        <br>
-        <div class="btn-group">
-          <button class="btn btn-primary" ng-click="ctrl.start()"
-                  ng-disabled="ctrl.running">Start
-          </button>
-          <button class="btn btn-danger" ng-click="ctrl.onStopClick()"
-                  ng-disabled="!ctrl.running">Stop
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="expiredModel" tabindex="-1"
-       role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Session Complete!</h4>
-        </div>
-        <div class="modal-body">
-          Your session is complete!
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(30)">30 min.
+            </button>
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(5)">5 min.
+            </button>
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(.1)">1 min.
+            </button>
+          </div>
           <br>
-          Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
+          <br>
+          <div class="btn-group">
+            <button class="btn btn-primary" ng-click="ctrl.start()" ng-disabled="ctrl.running">Start
+            </button>
+            <button class="btn btn-danger" ng-click="ctrl.onStopClick()" ng-disabled="!ctrl.running">Stop
+            </button>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success pull-left"
-                  data-dismiss="modal" ng-click="ctrl.setBreak()">Break
-          </button>
-          <button type="button" class="btn btn-warning pull-left"
-                  data-dismiss="modal" ng-click="ctrl.setSnooze()">Snooze
-          </button>
-          <button type="button" class="btn btn-primary"
-                  data-dismiss="modal">Close
-          </button>
+
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="expiredModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Session Complete!</h4>
+          </div>
+          <div class="modal-body">
+            Your session is complete!
+            <br> Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-click="ctrl.setBreak()">Break
+            </button>
+            <button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="ctrl.setSnooze()">Snooze
+            </button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-
-<script src="app/libs/jquery.js"></script>
-<script src="app/libs/bootstrap.js"></script>
-<script src="app/libs/angular.js"></script>
-<script src="app/app.js"></script>
-<script src="app/main.ctrl.js"></script>
+  <script src="app/libs/jquery.js"></script>
+  <script src="app/libs/bootstrap.js"></script>
+  <script src="app/libs/angular.js"></script>
+  <!--%APP_SCRIPTS%-->
+  <script src="app-build/js/app.js"></script>
+  <script src="app-build/js/main.ctrl.js"></script>
+  <!--%END_APP_SCRIPTS%-->
 </body>
-
 </html>
