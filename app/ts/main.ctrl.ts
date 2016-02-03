@@ -1,128 +1,225 @@
 /// <reference path="../../typings/tsd.d.ts" />
 module PomPom {
 
+  enum SessionType { Full, Break, Snooze }
+
+  // constant values for starting/ending color components
   const INITIAL_R: number = 0;
   const INITIAL_G: number = 230;
   const INITIAL_B: number = 10;
   const FINAL_R: number = 190;
 
-  class MainCtrl {
+  export class MainCtrl {
+    static $inject: string[] = ['$interval'];
 
+    // the string-based version of the current remaining time (i.e. 'MM:SS')
     timeDisplay: string;
+    // the string version of the current display type
+    sessString: string;
 
+    // color components for the page's current background color
     private r: number;
     private g: number;
     private b: number;
 
+    // variable to hold the current interval object returned from setInterval()
     private interval;
+    // the length of milliseconds of the timer's interval
     private intervalSize: number;
 
+    // the type of session we are currently running
+    private currentSessType: SessionType;
+    // the timestamp of the last call to the timer's tick() method
     private lastTick: number;
+    // the total length of the current session
     private initialTime: number;
+    // current remaining time
     private remaining: number;
+    // whether the timer is currently running
     private running: boolean;
 
+    /**
+     * ctor
+     */
     constructor(private $interval: ng.IIntervalService) {
       this.r = 0.0;
       this.g = INITIAL_G;
       this.b = INITIAL_B;
-      this.intervalSize = 25;
+      this.intervalSize = 20;
       this.remaining = 0;
       this.running = false;
       this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
       this.setLength(30);
     }
 
-    start(): void {
-      const self = this;
-      if (!self.running) {
-        self.lastTick = Date.now();
-        self.interval = self.$interval(() => self.tick(), self.intervalSize);
-        self.running = true;
-      }
+    /**
+     * Handler for clicking the 'start' button.
+     */
+    onStartClick(): void {
+      this.start();
     }
 
+    /**
+     * Handler for clicking the 'stop' button.
+     */
     onStopClick(): void {
-      const self = this;
-      self.stop();
+      this.stop();
     }
 
-    setLength(minutes: number): void {
-      const self = this;
-      self.initialTime = minutes * 60 * 1000;
-      self.remaining = self.initialTime;
-      self.updateTimeDisplay();
-      self.updateColor();
+    /**
+     * Sets the current session type to 'Full' but DOES NOT start the timer.
+     */
+    setFullSession(): void {
+      this.currentSessType = SessionType.Full;
+      this.sessString = 'Full';
+      this.setLength(30);
     }
 
-    setSnooze(): void {
-      this.setLength(2);
+    /**
+     * Sets the current session type to 'Full' and immediately starts the timer.
+     */
+    startFull(): void {
+      this.setFullSession();
+      this.sessString = this.currentSessType.toString();
       this.start();
     }
 
-    setBreak(): void {
+    /**
+     * Sets the current session type to 'Break' but DOES NOT start the timer.
+     */
+    setBreakSession(): void {
+      this.currentSessType = SessionType.Break;
+      this.sessString = 'Break';
       this.setLength(5);
+    }
+
+    /**
+     * Sets the current session type to 'Break' and immediately starts the timer.
+     */
+    startBreak(): void {
+      this.setBreakSession();
       this.start();
     }
 
-    private stop(): void {
-      const self = this;
-      if (self.running) {
-        self.$interval.cancel(self.interval);
-        self.running = false;
+    /**
+     * Sets the current session type to 'Snooze' but DOES NOT start the timer.
+     */
+    setSnoozeSession(): void {
+      this.currentSessType = SessionType.Snooze;
+      this.sessString = 'Snooze';
+      this.setLength(2);
+    }
+
+    /**
+     * Sets the current session type to 'Snooze' and immediately starts the timer.
+     */
+    startSnooze(): void {
+      this.setSnoozeSession();
+      this.start();
+    }
+
+    /**
+     * Sets the length, in minutes, of the current session. This will update the time
+     * display and background color, but will not start the timer yet.
+     *
+     * @param  {number} minutes The number of minutes to which the timer should be set
+     */
+    setLength(minutes: number): void {
+      this.initialTime = minutes * 60 * 1000;
+      this.remaining = this.initialTime;
+      this.updateTimeDisplay();
+      this.updateColor();
+    }
+
+    /**
+     * Starts the current session and sets the timer running.
+     */
+    private start(): void {
+      const _this = this;
+      if (!this.running) {
+        this.lastTick = Date.now();
+        this.interval = _this.$interval(() => _this.tick(), _this.intervalSize);
+        this.running = true;
       }
     }
 
+    /**
+     * Stops the current session and timer.
+     */
+    private stop(): void {
+      if (this.running) {
+        this.$interval.cancel(this.interval);
+        this.running = false;
+      }
+    }
+
+    /**
+     * Updates the current time string formatted for display on the page.
+     * This is formatted in 'MM:SS' format.
+     */
     private updateTimeDisplay(): void {
-      const self = this;
-      let min: string = Math.floor(self.remaining / 1000 / 60).toString();
+      let min: string = Math.floor(this.remaining / 1000 / 60).toString();
       if (min === '0') {
         min = '';
       }
-      let sec: string = Math.floor(self.remaining / 1000 % 60).toString();
+      let sec: string = Math.floor(this.remaining / 1000 % 60).toString();
       if (sec.length < 2) {
         sec = '0' + sec;
       }
-      self.timeDisplay = `${min}:${sec}`;
+      this.timeDisplay = `${min}:${sec}`;
     }
 
+    /**
+     *
+     */
     private updateColor(): void {
-      const self = this;
-      let mult = self.remaining / self.initialTime;
-      self.r = Math.min(FINAL_R - (FINAL_R * mult), FINAL_R);
-      self.g = Math.max(INITIAL_G * mult, 0);
-      self.setColor(Math.floor(self.r), Math.floor(self.g), self.b);
+      let mult = this.remaining / this.initialTime;
+      this.r = Math.min(FINAL_R - (FINAL_R * mult), FINAL_R);
+      this.g = Math.max(INITIAL_G * mult, 0);
+      this.setColor(Math.floor(this.r), Math.floor(this.g), this.b);
     }
 
+    /**
+     * Sets the color of the page's background
+     *
+     * @param  {number} r - Red color component
+     * @param  {number} g - Green color component
+     * @param  {number} b - Blue color component
+     */
     private setColor(r: number, g: number, b: number): void {
       let rgbStr = `rgb(${r}, ${g}, ${b})`;
       $('body').css('background-color', rgbStr);
     }
 
+    /**
+     * Updates the timer by counting the time since the last call. Background color
+     * and time display are updated accordingly.
+     */
     private tick(): void {
-      const self = this;
-      self.remaining -= (Date.now() - self.lastTick);
-      self.lastTick = Date.now();
-      if (self.remaining < self.intervalSize) {
-        self.remaining = 0;
+      this.remaining -= (Date.now() - this.lastTick);
+      this.lastTick = Date.now();
+      if (this.remaining < this.intervalSize) {
+        this.remaining = 0;
       }
-      self.updateColor();
-      self.updateTimeDisplay();
+      this.updateColor();
+      this.updateTimeDisplay();
 
-      if (self.remaining <= 0) {
-        self.onTimeExpired();
+      if (this.remaining <= 0) {
+        this.onTimeExpired();
       }
     }
 
+    /**
+     * Handler for timer expiring. Stops the session and shows the modal
+     * with options for next action.
+     */
     private onTimeExpired(): void {
-      console.log('onTimeExpired()');
       this.stop();
-      // TODO replace with a modal with an option to snooze
-      $('#expiredModel').modal({show: true});
+      $('#expiredModel').modal({ show: true });
     }
   }
 
-  angular.module('pompom').controller('MainCtrl', [
-    '$interval',
-    MainCtrl]);
+  angular
+    .module('pompom')
+    .controller('MainCtrl', MainCtrl);
 }

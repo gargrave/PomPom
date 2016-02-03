@@ -19,17 +19,17 @@
           <h1 id="time-display" class="time-display" ng-bind="ctrl.timeDisplay">30:00</h1>
 
           <div class="btn-group btn-group-sm">
-            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(30)">30 min.
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setFullSession()">Full
             </button>
-            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(5)">5 min.
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setBreakSession()">Break
             </button>
-            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(.1)">1 min.
+            <button class="btn btn-sm btn-default" ng-disabled="ctrl.running" ng-click="ctrl.setLength(.1)">Mini
             </button>
           </div>
           <br>
           <br>
           <div class="btn-group">
-            <button class="btn btn-primary" ng-click="ctrl.start()" ng-disabled="ctrl.running">Start
+            <button class="btn btn-primary" ng-click="ctrl.onStartClick()" ng-disabled="ctrl.running">Start
             </button>
             <button class="btn btn-danger" ng-click="ctrl.onStopClick()" ng-disabled="!ctrl.running">Stop
             </button>
@@ -52,9 +52,9 @@
             <br> Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-click="ctrl.setBreak()">Break
+            <button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-click="ctrl.startBreak()">Break
             </button>
-            <button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="ctrl.setSnooze()">Snooze
+            <button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="ctrl.startSnooze()">Snooze
             </button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close
             </button>
