@@ -4,6 +4,8 @@ module.exports = function (grunt) {
 
     config: {
       title: 'PomPom',
+      buildDir: 'app-build',
+      distDir: 'app-dist',
       date: function () {
         var d = new Date();
         return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
@@ -19,7 +21,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'app-build/css/main.css': 'app/css/main.scss'
+          '<%= config.buildDir %>/css/main.css': 'app/css/main.scss'
         }
       }
     },
@@ -31,9 +33,9 @@ module.exports = function (grunt) {
       target: {
         files: [{
           expand: true,
-          cwd: 'app-build/css/',
+          cwd: '<%= config.buildDir %>/css/',
           src: ['*.css'],
-          dest: 'app-dist/app/css',
+          dest: '<%= config.distDir %>/app/css',
           ext: '.min.css'
         }]
       }
@@ -45,7 +47,7 @@ module.exports = function (grunt) {
     typescript: {
       base: {
         src: ['app/ts/**/*.ts'],
-        dest: 'app-build/js/',
+        dest: '<%= config.buildDir %>/js/',
         options: {
           module: 'commonjs',
           target: 'es5',
@@ -59,7 +61,7 @@ module.exports = function (grunt) {
      ==============================================*/
     clean: {
       main: [
-        'app-dist/*'
+        '<%= config.distDir %>/*'
       ]
     },
 
@@ -73,9 +75,9 @@ module.exports = function (grunt) {
           banner: '/* <%= config.title %> | v. <%= config.date() %> */\n'
         },
         files: [{
-          'app-dist/app/app.min.js': [
-            'app-build/js/app.js',
-            'app-build/js/main.ctrl.js'
+          '<%= config.distDir %>/app/app.min.js': [
+            '<%= config.buildDir %>/js/app.js',
+            '<%= config.buildDir %>/js/main.ctrl.js'
           ]
         }]
       }
@@ -97,7 +99,7 @@ module.exports = function (grunt) {
             'bower_components/angular/angular.min.js',
             'bower_components/angular/angular.min.js.map'
           ],
-          dest: 'app-dist/app/libs/'
+          dest: '<%= config.distDir %>/app/libs/'
         }]
       }
     },
@@ -130,7 +132,7 @@ module.exports = function (grunt) {
         files: [
           {
             src: 'index.html',
-            dest: 'app-dist/index.html'
+            dest: '<%= config.distDir %>/index.html'
           }
         ]
       }
@@ -152,6 +154,9 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
+    'sass', 'typescript'
+  ]);
+  grunt.registerTask('dist', [
     'clean',
     'sass', 'cssmin',
     'typescript', 'uglify',
