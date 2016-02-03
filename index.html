@@ -31,7 +31,7 @@
         </div>
         <br>
         <br>
-        <div class="">
+        <div class="btn-group">
           <button class="btn btn-primary" ng-click="ctrl.start()"
                   ng-disabled="ctrl.running">Start
           </button>
@@ -56,17 +56,19 @@
           <h4 class="modal-title" id="myModalLabel">Session Complete!</h4>
         </div>
         <div class="modal-body">
-          ...
+          Your session is complete!
+          <br>
+          Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary pull-left"
+          <button type="button" class="btn btn-success pull-left"
+                  data-dismiss="modal" ng-click="ctrl.setBreak()">Break
+          </button>
+          <button type="button" class="btn btn-warning pull-left"
+                  data-dismiss="modal" ng-click="ctrl.setSnooze()">Snooze
+          </button>
+          <button type="button" class="btn btn-primary"
                   data-dismiss="modal">Close
-          </button>
-          <button type="button" class="btn btn-warning"
-                  data-dismiss="modal" ng-click="ctrl.setSnooze()">Snooze (2 min.)
-          </button>
-          <button type="button" class="btn btn-success"
-                  data-dismiss="modal" ng-click="ctrl.setBreak()">Break (5 min.)
           </button>
         </div>
       </div>
