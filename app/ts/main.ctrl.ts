@@ -39,6 +39,8 @@ module PomPom {
     private remaining: number;
     // whether the timer is currently running
     private running: boolean;
+    // current number of snoozes
+    private snoozes: number;
 
     /**
      * ctor
@@ -50,6 +52,7 @@ module PomPom {
       this.intervalSize = 20;
       this.remaining = 0;
       this.running = false;
+      this.snoozes = 0;
       this.setColor(INITIAL_R, INITIAL_G, INITIAL_B);
       this.setFullSession();
     }
@@ -82,6 +85,7 @@ module PomPom {
      * Sets the current session type to 'Full' and immediately starts the timer.
      */
     startFull(): void {
+      this.snoozes = 0;
       this.setFullSession();
       this.start();
     }
@@ -100,6 +104,7 @@ module PomPom {
      * Sets the current session type to 'Break' and immediately starts the timer.
      */
     startBreak(): void {
+      this.snoozes = 0;
       this.setBreakSession();
       this.start();
     }
@@ -110,14 +115,15 @@ module PomPom {
     setSnoozeSession(): void {
       this.currentSessType = SessionType.Snooze;
       this.sessionName = 'Snooze';
-      this.sessionDesc = '2-Minute Snooze';
-      this.setLength(2);
+      this.sessionDesc = `Snooze #${this.snoozes}`;
+      this.setLength(.2);
     }
 
     /**
      * Sets the current session type to 'Snooze' and immediately starts the timer.
      */
     startSnooze(): void {
+      this.snoozes += 1;
       this.setSnoozeSession();
       this.start();
     }
@@ -126,6 +132,7 @@ module PomPom {
      * Sets the current session type to 'Full' but DOES NOT start the timer.
      */
     setMiniSession(): void {
+      this.snoozes = 0;
       this.currentSessType = SessionType.Mini;
       this.sessionName = 'Mini';
       this.sessionDesc = 'Mini Session';
