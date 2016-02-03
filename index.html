@@ -20,11 +20,14 @@
 
         <div class="btn-group btn-group-sm">
           <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setLength(30)">30 min.</button>
+                  ng-click="ctrl.setLength(30)">30 min.
+          </button>
           <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setLength(5)">5 min.</button>
+                  ng-click="ctrl.setLength(5)">5 min.
+          </button>
           <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setLength(1)">1 min.</button>
+                  ng-click="ctrl.setLength(.1)">1 min.
+          </button>
         </div>
         <br>
         <br>
@@ -40,7 +43,37 @@
 
     </div>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="expiredModel" tabindex="-1"
+       role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Session Complete!</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary pull-left"
+                  data-dismiss="modal">Close
+          </button>
+          <button type="button" class="btn btn-warning"
+                  data-dismiss="modal" ng-click="ctrl.setSnooze()">Snooze (2 min.)
+          </button>
+          <button type="button" class="btn btn-success"
+                  data-dismiss="modal" ng-click="ctrl.setBreak()">Break (5 min.)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <script src="app/libs/jquery.js"></script>
 <script src="app/libs/bootstrap.js"></script>

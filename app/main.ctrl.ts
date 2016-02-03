@@ -55,6 +55,16 @@ module PomPom {
       self.updateColor();
     }
 
+    setSnooze(): void {
+      this.setLength(2);
+      this.start();
+    }
+
+    setBreak(): void {
+      this.setLength(5);
+      this.start();
+    }
+
     private stop(): void {
       const self = this;
       if (self.running) {
@@ -100,9 +110,15 @@ module PomPom {
       self.updateTimeDisplay();
 
       if (self.remaining <= 0) {
-        self.stop();
-        alert('Done!');
+        self.onTimeExpired();
       }
+    }
+
+    private onTimeExpired(): void {
+      console.log('onTimeExpired()');
+      this.stop();
+      // TODO replace with a modal with an option to snooze
+      $('#expiredModel').modal({show: true});
     }
   }
 

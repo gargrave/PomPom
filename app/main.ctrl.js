@@ -35,6 +35,14 @@ var PomPom;
             self.updateTimeDisplay();
             self.updateColor();
         };
+        MainCtrl.prototype.setSnooze = function () {
+            this.setLength(2);
+            this.start();
+        };
+        MainCtrl.prototype.setBreak = function () {
+            this.setLength(5);
+            this.start();
+        };
         MainCtrl.prototype.stop = function () {
             var self = this;
             if (self.running) {
@@ -75,9 +83,13 @@ var PomPom;
             self.updateColor();
             self.updateTimeDisplay();
             if (self.remaining <= 0) {
-                self.stop();
-                alert('Done!');
+                self.onTimeExpired();
             }
+        };
+        MainCtrl.prototype.onTimeExpired = function () {
+            console.log('onTimeExpired()');
+            this.stop();
+            $('#expiredModel').modal({ show: true });
         };
         return MainCtrl;
     })();
