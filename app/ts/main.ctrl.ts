@@ -18,6 +18,7 @@ module PomPom {
     sessionName: string;
     // the description of the curresnt session
     sessionDesc: string;
+    lastSessionDesc: string;
 
     // color components for the page's current background color
     private r: number;
@@ -30,7 +31,8 @@ module PomPom {
     private intervalSize: number;
 
     // the type of session we are currently running
-    private currentSessType: SessionType;
+    private currentSessionType: SessionType;
+    private lastSessionType: SessionType;
     // the timestamp of the last call to the timer's tick() method
     private lastTick: number;
     // the total length of the current session
@@ -75,7 +77,7 @@ module PomPom {
      * Sets the current session type to 'Full' but DOES NOT start the timer.
      */
     setFullSession(): void {
-      this.currentSessType = SessionType.Full;
+      this.currentSessionType = SessionType.Full;
       this.sessionName = 'Full';
       this.sessionDesc = '30-Minute Session';
       this.setLength(30);
@@ -94,7 +96,7 @@ module PomPom {
      * Sets the current session type to 'Break' but DOES NOT start the timer.
      */
     setBreakSession(): void {
-      this.currentSessType = SessionType.Break;
+      this.currentSessionType = SessionType.Break;
       this.sessionName = 'Break';
       this.sessionDesc = '5-Minute Break';
       this.setLength(5);
@@ -113,10 +115,10 @@ module PomPom {
      * Sets the current session type to 'Snooze' but DOES NOT start the timer.
      */
     setSnoozeSession(): void {
-      this.currentSessType = SessionType.Snooze;
+      this.currentSessionType = SessionType.Snooze;
       this.sessionName = 'Snooze';
       this.sessionDesc = `Snooze #${this.snoozes}`;
-      this.setLength(.2);
+      this.setLength(2);
     }
 
     /**
@@ -133,10 +135,25 @@ module PomPom {
      */
     setMiniSession(): void {
       this.snoozes = 0;
-      this.currentSessType = SessionType.Mini;
+      this.currentSessionType = SessionType.Mini;
       this.sessionName = 'Mini';
       this.sessionDesc = 'Mini Session';
-      this.setLength(.1);
+      this.setLength(.05);
+    }
+
+    /**
+     * @returns boolean Whether the message should be shown for starting a break session
+     */
+    showBreakMsg(): boolean {
+      return this.lastSessionType === SessionType.Full ||
+        this.lastSessionType === SessionType.Snooze;
+    }
+
+    /**
+     * @returns boolean Whether the message should be shown for starting a new full session
+     */
+    showStartMsg(): boolean {
+      return this.lastSessionType === SessionType.Break;
     }
 
     /**
@@ -169,6 +186,8 @@ module PomPom {
      */
     private stop(): void {
       if (this.running) {
+        this.lastSessionType = this.currentSessionType;
+        this.lastSessionDesc = this.sessionDesc;
         this.$interval.cancel(this.interval);
         this.running = false;
       }
