@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.initConfig({
 
@@ -6,7 +6,7 @@ module.exports = function (grunt) {
       title: 'PomPom',
       buildDir: 'app-build',
       distDir: 'app-dist',
-      date: function () {
+      date: function() {
         var d = new Date();
         return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       }
@@ -144,13 +144,13 @@ module.exports = function (grunt) {
     watch: {
       sass: {
         files: ['**/*.scss'],
-        tasks: ['sass', 'cssmin'],
+        tasks: ['sass', 'cssmin']
       },
       ts: {
         files: ['app/ts/**/*.ts'],
         tasks: ['typescript', 'uglify']
       }
-    },
+    }
   });
 
   grunt.registerTask('build', [

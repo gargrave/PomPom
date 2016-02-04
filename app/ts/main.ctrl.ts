@@ -4,10 +4,9 @@ module PomPom {
   enum SessionType { Full, Break, Snooze, Mini }
 
   class Session {
-    constructor(
-      public type: SessionType,
-      public desc: string,
-      public length: number) {
+    constructor(public type: SessionType,
+                public desc: string,
+                public length: number) {
     }
   }
 
@@ -167,7 +166,7 @@ module PomPom {
     showBreakMsg(): boolean {
       return this.previousSession &&
         (this.previousSession.type === SessionType.Full ||
-          this.previousSession.type === SessionType.Snooze);
+        this.previousSession.type === SessionType.Snooze);
     }
 
     /**
@@ -276,7 +275,7 @@ module PomPom {
      */
     private onTimeExpired(): void {
       this.stop();
-      $('#expiredModel').modal({ show: true });
+      $('#expiredModel').modal({show: true});
     }
   }
 
