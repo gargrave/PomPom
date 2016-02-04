@@ -35,7 +35,7 @@
             </button>
           </div>
           <br>
-          <h4 class="main-panel-footer">Current: <span ng-bind="ctrl.sessionDesc">30-Minute Session</span></h4>
+          <h4 class="main-panel-footer">Current: <span ng-bind="ctrl.currentSession.desc">30-Minute Session</span></h4>
         </div>
 
       </div>
@@ -53,13 +53,13 @@
 
             <!-- completion message for full sessions -->
             <span ng-show="ctrl.showBreakMsg()">
-              Your <span ng-bind=ctrl.lastSessionDesc>session</span> is complete!
-              <br> Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
+              Your <span ng-bind=ctrl.previousSession.desc>session</span> is complete!
+            <br> Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
             </span>
             <!-- completion message for breaks -->
             <span ng-show="ctrl.showStartMsg()">
-              Your <span ng-bind=ctrl.lastSessionDesc>session</span> is complete!
-              <br> Press 'Start' to start a 30-minute session, or 'Snooze' if you need a little extra time.
+              Your <span ng-bind=ctrl.previousSession.desc>session</span> is complete!
+            <br> Press 'Start' to start a 30-minute session, or 'Snooze' if you need a little extra time.
             </span>
 
           </div>
