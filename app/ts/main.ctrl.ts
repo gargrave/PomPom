@@ -23,7 +23,7 @@ module PomPom {
       '30-Minute Session',
       30
     ),
-    break: new Session(
+    shortBreak: new Session(
       SessionType.Break,
       '5-Minute Break',
       5
@@ -121,7 +121,7 @@ module PomPom {
      * Sets the current session type to 'Break' but DOES NOT start the timer.
      */
     setBreakSession(): void {
-      this.currentSession = SESSIONS.break;
+      this.currentSession = SESSIONS.shortBreak;
       this.setLength(this.currentSession.length);
     }
 
