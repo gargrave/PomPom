@@ -10,35 +10,35 @@
 
 <body ng-app="pompom">
 
-<div class="container" ng-controller="MainCtrl as ctrl">
+<div class="container" ng-controller="MainCtrl as vm">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
 
       <div class="jumbotron text-center main-panel">
         <h2 class="title">PomPom</h2>
-        <h1 id="time-display" class="time-display" ng-bind="ctrl.timeDisplay">30:00</h1>
+        <h1 id="time-display" class="time-display" ng-bind="vm.timeDisplay">30:00</h1>
 
         <div class="btn-group btn-group-sm">
-          <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setFullSession()">Full
+          <button class="btn btn-sm btn-default" ng-disabled="vm.running"
+                  ng-click="vm.setFullSession()">Full
           </button>
-          <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setBreakSession()">Break
+          <button class="btn btn-sm btn-default" ng-disabled="vm.running"
+                  ng-click="vm.setBreakSession()">Break
           </button>
-          <button class="btn btn-sm btn-default" ng-disabled="ctrl.running"
-                  ng-click="ctrl.setMiniSession()">Mini
+          <button class="btn btn-sm btn-default" ng-disabled="vm.running"
+                  ng-click="vm.setMiniSession()">Mini
           </button>
         </div>
         <br>
         <br>
         <div class="btn-group">
-          <button class="btn btn-primary" ng-click="ctrl.onStartClick()" ng-disabled="ctrl.running">Start
+          <button class="btn btn-primary" ng-click="vm.onStartClick()" ng-disabled="vm.running">Start
           </button>
-          <button class="btn btn-danger" ng-click="ctrl.onStopClick()" ng-disabled="!ctrl.running">Stop
+          <button class="btn btn-danger" ng-click="vm.onStopClick()" ng-disabled="!vm.running">Stop
           </button>
         </div>
         <br>
-        <h4 class="main-panel-footer">Current: <span ng-bind="ctrl.currentSession.desc">30-Minute Session</span></h4>
+        <h4 class="main-panel-footer">Current: <span ng-bind="vm.currentSession.desc">30-Minute Session</span></h4>
       </div>
 
     </div>
@@ -56,13 +56,13 @@
         <div class="modal-body">
 
           <!-- completion message for full sessions -->
-            <span ng-show="ctrl.showBreakMsg()">
-              Your <span ng-bind=ctrl.previousSession.desc>session</span> is complete!
+            <span ng-show="vm.showBreakMsg()">
+              Your <span ng-bind=vm.previousSession.desc>session</span> is complete!
             <br> Press 'Break' to take a 5-minute break, or 'Snooze' if you need a little extra time.
             </span>
           <!-- completion message for breaks -->
-            <span ng-show="ctrl.showStartMsg()">
-              Your <span ng-bind=ctrl.previousSession.desc>session</span> is complete!
+            <span ng-show="vm.showStartMsg()">
+              Your <span ng-bind=vm.previousSession.desc>session</span> is complete!
             <br> Press 'Start' to start a 30-minute session, or 'Snooze' if you need a little extra time.
             </span>
 
@@ -71,15 +71,15 @@
 
           <!-- "start a break" button -->
           <button type="button" class="btn btn-success pull-left" data-dismiss="modal"
-                  ng-show="ctrl.showBreakMsg()" ng-click="ctrl.startBreak()">Break
+                  ng-show="vm.showBreakMsg()" ng-click="vm.startBreak()">Break
           </button>
           <!-- "start full session" button -->
           <button type="button" class="btn btn-success pull-left" data-dismiss="modal"
-                  ng-show="ctrl.showStartMsg()" ng-click="ctrl.startFull()">Start
+                  ng-show="vm.showStartMsg()" ng-click="vm.startFull()">Start
           </button>
 
           <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"
-                  ng-click="ctrl.startSnooze()">Snooze
+                  ng-click="vm.startSnooze()">Snooze
           </button>
           <button type="button" class="btn btn-primary" data-dismiss="modal">Close
           </button>
