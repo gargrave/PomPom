@@ -1,7 +1,6 @@
 {
-  "name": "pompom",
-  "description": "",
-  "main": "",
+  "name": "PomPom",
+  "description": "A super simple pomodoro-style timer app.",
   "moduleType": [],
   "license": "MIT",
   "homepage": "",

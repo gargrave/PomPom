@@ -1,18 +1,15 @@
 {
-  "name": "pompom",
-  "version": "1.0.0",
-  "description": "",
-  "main": "Gruntfile.js",
+  "name": "PomPom",
+  "version": "0.1.0",
+  "description": "A super simple pomodoro-style timer app.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gargrave@bitbucket.org/gargrave/pompom.git"
+    "url": ""
   },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/gargrave/pompom#readme",
+  "author": "Gabe Hargrave",
+  "license": "MIT",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.7.0",
